@@ -9,16 +9,16 @@
 <hr/>
 
 ### Project Goal
-To implement an RFID-based door lock system in the SCE club room's officer's room
+To implement an RFID door lock access system in the SCE club room's officer's room
 
 <hr/>
 
 ### Tools and Technologies
 
-|  ESP32 |  Arduino |  Node JS |  React JS |  Express JS | Axios | MongoDB |
+|  ESP32 |  Arduino |  Node JS |  React JS |  Express JS| AWS IOT | MongoDB |
 |---|---|---|---|---|---|---|
 
 <hr/>
 
 ### Project Architecture
-[TBA]
+![centauri-model](https://user-images.githubusercontent.com/75186517/156130586-7a5729ff-1a47-4337-beb4-01cb32993be8.png)

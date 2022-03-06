@@ -21,4 +21,4 @@ To implement an RFID door lock access system in the SCE club room's officer's ro
 <hr/>
 
 ### Project Architecture
-![centauri-model](images/centauri-model.png)
+![centauri-model](https://user-images.githubusercontent.com/75186517/156943979-f7d90395-dc03-4df7-9f45-d46dd02057a8.png)

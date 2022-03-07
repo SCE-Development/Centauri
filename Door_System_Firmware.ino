@@ -4,7 +4,7 @@
 #include <ArduinoJson.h>
 #include "WiFi.h"
 
-#define AWS_IOT_PUBLISH_TOPIC   "MessageForNode"
+#define AWS_IOT_PUBLISH_TOPIC "MessageForNode"
 #define AWS_IOT_SUBSCRIBE_TOPIC "MessageForESP32"
 
 WiFiClientSecure net = WiFiClientSecure();
@@ -13,28 +13,32 @@ PubSubClient client(net);
 /**
  * Connects to WiFi using credentials given in
  * secrets.h file
-*/
-void ConnectToWiFi() {
+ */
+void ConnectToWiFi()
+{
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
-  Serial.print("Connecting to Wi-Fi");
-  
-  while (WiFi.status() != WL_CONNECTED){
+  Serial.print("Connecting to Wi-Fi...");
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
     Serial.print(".");
   }
-  if(WiFi.status() == WL_CONNECTED) {
+  if (WiFi.status() == WL_CONNECTED)
+  {
     Serial.println("...Connected");
   }
 }
 
 /**
- * Connects to AWS IoT Core using the 
+ * Connects to AWS IoT Core using the
  * credentials provided in secrets.h file
  * and sets publish and subscribe topic
-*/
-void ConnectToAWS() {
+ */
+void ConnectToAWS()
+{
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
@@ -42,11 +46,13 @@ void ConnectToAWS() {
   client.setServer(AWS_IOT_ENDPOINT, 8883);
   client.setCallback(HandleMessageFromPubSub);
   Serial.print("Connecting to AWS IOT...");
-  while (!client.connect(THINGNAME)) {
+  while (!client.connect(THINGNAME))
+  {
     Serial.print(".");
     delay(100);
   }
-  if(!client.connected()){
+  if (!client.connected())
+  {
     Serial.println("AWS IoT Timeout!");
     return;
   }
@@ -59,10 +65,10 @@ void ConnectToAWS() {
  * by the RFID API running in Core-v4
  * e.g. :
  *      {
- *        "message" : <bytes>  
+ *        "message" : <bytes>
  *      }
  * where bytes is the RFID bytes stored as an integer
-*/
+ */
 void PublishMessage(int rfid_byte)
 {
   StaticJsonDocument<200> doc;
@@ -76,42 +82,50 @@ void PublishMessage(int rfid_byte)
  * Handles incoming messages and determines
  * if door should be opened or not based on the
  * message recieved
- * 
- * e.g. message format: 
+ *
+ * e.g. message format:
  *    {
- *      "message" : <int> 
+ *      "message" : <int>
  *    }
  * where <int> is HTTP code
-*/
-void HandleMessageFromPubSub(char* topic, byte* payload, unsigned int length) {
+ */
+void HandleMessageFromPubSub(char *topic, byte *payload, unsigned int length)
+{
   StaticJsonDocument<200> doc;
   deserializeJson(doc, payload);
   const int message = doc["message"];
-  if(message == 200) {
-   Serial.println("Door Open");
-  } else {
+  if (message == 200)
+  {
+    Serial.println("Door Open");
+  }
+  else
+  {
     Serial.println("Unauthorized");
   }
 }
 
 /**
  * Converts RFID bytes array to String
-*/
-String ToString(byte *buffer, byte bufferSize) {
+ */
+String ToString(byte *buffer, byte bufferSize)
+{
   String ret = "";
-   for (byte i = 0; i < bufferSize; i++) {
+  for (byte i = 0; i < bufferSize; i++)
+  {
     ret += buffer[i];
   }
   return ret;
 }
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
   Serial.println(F("Initialize System"));
   ConnectToWiFi();
   ConnectToAWS();
 }
 
-void loop() {
+void loop()
+{
   client.loop();
 }

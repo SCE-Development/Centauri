@@ -1,6 +1,3 @@
-//Libraries
-#include <SPI.h>//https://www.arduino.cc/en/reference/SPI
-#include <MFRC522.h>//https://github.com/miguelbalboa/rfid
 #include "secrets.h"
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
@@ -8,19 +5,12 @@
 #include "WiFi.h"
 
 //Constants
-#define SS_PIN 5
-#define RST_PIN 0
-#define PwrPin 22
 #define AWS_IOT_PUBLISH_TOPIC   "MessageForNode"
 #define AWS_IOT_SUBSCRIBE_TOPIC "MessageForESP32"
 
 WiFiClientSecure net = WiFiClientSecure();
 PubSubClient client(net);
 
-//Variables
-byte nuidPICC[4] = {0, 0, 0, 0};
-MFRC522::MIFARE_Key key;
-MFRC522 rfid = MFRC522(SS_PIN, RST_PIN);
 
 void connectAWS()
 {
@@ -89,12 +79,6 @@ void setup() {
   Serial.println(F("Initialize System"));
   //Connect to AWS IoT
   connectAWS();
-  //init rfid D8,D5,D6,D7
-  SPI.begin();
-  rfid.PCD_Init();
-  Serial.print(F("Reader :"));
-  rfid.PCD_DumpVersionToSerial();
-  pinMode(PwrPin, OUTPUT);
 }
 
 void loop() {
@@ -104,22 +88,6 @@ void loop() {
   client.loop();
 }
 
-void readRFID(void ) { /* function readRFID */
-  ////Read RFID card
-  for (byte i = 0; i < 6; i++) {
-    key.keyByte[i] = 0xFF;
-  }
-  
-  int rfid_byte = toString(rfid.uid.uidByte, rfid.uid.size).toInt();
-  publishMessage(rfid_byte);
-
-  
-  // Halt PICC
-  rfid.PICC_HaltA();
-
-  // Stop encryption on PCD
-  rfid.PCD_StopCrypto1();
-}
 
 String toString(byte *buffer, byte bufferSize) {
   String ret = "";

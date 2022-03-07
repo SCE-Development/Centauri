@@ -1,3 +1,4 @@
+#include <pgmspace.h>
 #define SECRET
 #define THINGNAME "ESP32"
 

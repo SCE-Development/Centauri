@@ -1,0 +1,5 @@
+### VisualStudioCode ###
+.vscode/*
+
+### secrets.h ###
+secrets/secrets.h

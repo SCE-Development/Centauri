@@ -109,10 +109,9 @@ void setup() {
   Serial.begin(9600);
   Serial.println(F("Initialize System"));
   ConnectToWiFi();
-  ConnectAWS();
+  ConnectToAWS();
 }
 
 void loop() {
-  digitalWrite(PwrPin,HIGH);
   client.loop();
 }

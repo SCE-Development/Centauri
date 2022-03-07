@@ -29,4 +29,4 @@ To implement an RFID door lock access system in the SCE club room's officer's ro
 
 ### Getting Started
 
-See the [Wiki](https://github.com/SCE-Development/Centauri/wiki) to get setup this project on your local machine
+See the [Wiki](https://github.com/SCE-Development/Centauri/wiki) to setup this project on your local machine

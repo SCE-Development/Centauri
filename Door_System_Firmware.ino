@@ -14,7 +14,7 @@ PubSubClient client(net);
  * Connects to WiFi using credentials given in
  * secrets.h file
 */
-void connectToWiFi() {
+void ConnectToWiFi() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
@@ -34,13 +34,11 @@ void connectToWiFi() {
  * credentials provided in secrets.h file
  * and sets publish and subscribe topic
 */
-void connectToAWS() {
-  // Configure WiFiClientSecure to use the AWS IoT device credentials
+void ConnectToAWS() {
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
 
-  // Connect to the MQTT broker on the AWS endpoint we defined earlier
   client.setServer(AWS_IOT_ENDPOINT, 8883);
   client.setCallback(HandleMessageFromPubSub);
   Serial.print("Connecting to AWS IOT...");
@@ -65,7 +63,7 @@ void connectToAWS() {
  *      }
  * where bytes is the RFID bytes stored as an integer
 */
-void publishMessage(int rfid_byte)
+void PublishMessage(int rfid_byte)
 {
   StaticJsonDocument<200> doc;
   doc["message"] = rfid_byte;
@@ -99,7 +97,7 @@ void HandleMessageFromPubSub(char* topic, byte* payload, unsigned int length) {
 /**
  * Converts RFID bytes array to String
 */
-String toString(byte *buffer, byte bufferSize) {
+String ToString(byte *buffer, byte bufferSize) {
   String ret = "";
    for (byte i = 0; i < bufferSize; i++) {
     ret += buffer[i];
@@ -110,12 +108,11 @@ String toString(byte *buffer, byte bufferSize) {
 void setup() {
   Serial.begin(9600);
   Serial.println(F("Initialize System"));
-  connectToWiFi();
-  connectAWS();
+  ConnectToWiFi();
+  ConnectAWS();
 }
 
 void loop() {
-   digitalWrite(PwrPin,HIGH);
-  readRFID();
+  digitalWrite(PwrPin,HIGH);
   client.loop();
 }

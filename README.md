@@ -5,6 +5,7 @@
 - [Project Goal](#project-goal)
 - [Tools & Technologies](#tools-and-technologies)
 - [Project Architecture](#project-architecture)
+- [Getting Started](#getting-started)
 
 <hr/>
 
@@ -21,4 +22,11 @@ To implement an RFID door lock access system in the SCE club room's officer's ro
 <hr/>
 
 ### Project Architecture
-![centauri-model](https://user-images.githubusercontent.com/75186517/156130586-7a5729ff-1a47-4337-beb4-01cb32993be8.png)
+![centauri-model](https://user-images.githubusercontent.com/75186517/156943979-f7d90395-dc03-4df7-9f45-d46dd02057a8.png)
+
+<hr/>
+
+
+### Getting Started
+
+See the [Wiki](https://github.com/SCE-Development/Centauri/wiki) to setup this project on your local machine

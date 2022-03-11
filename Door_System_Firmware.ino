@@ -61,15 +61,16 @@ void ConnectToAWS()
 }
 
 /**
- * Published scanned RFID's byte to AWS to be validated
+ * Publish scanned RFID's byte to AWS to be validated
+
  * by the RFID API running in Core-v4
  * e.g. :
  *      {
- *        "message" : <bytes>
+ *        "message" : <String>
  *      }
- * where bytes is the RFID bytes stored as an integer
+ * where String is the RFID bytes
  */
-void PublishMessage(int rfid_byte)
+void PublishMessageToPubSub(String rfid_byte)
 {
   StaticJsonDocument<200> doc;
   doc["message"] = rfid_byte;
